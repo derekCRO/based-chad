@@ -1,0 +1,40 @@
+import * as React from "react" import * as ReactDOM from "react-dom/client"
+import * as Framer from "framer" window.__framer_importFromPackage =
+(packageAndFilename, exportIdentifier) => () => { return
+React.createElement(Framer.ErrorPlaceholder, { error: 'Package component not
+supported: "' + exportIdentifier + '" in "' + packageAndFilename + '"' }) } // A
+lot of libraries assume process.env.NODE_ENV is present in runtime/buildtime, so
+we are polyfilling it window.process = { ...window.process, env: {
+...(window.process ? window.process.env: undefined), NODE_ENV: "production" } }
+// Fallback support for stack gaps Framer.installFlexboxGapWorkaroundIfNeeded()
+window.__framer_events = window.__framer_events || [] function track() {
+window.__framer_events.push(arguments) } ;(async () => { const routes =
+{augiA20Il: {elements: {}, page: Framer.lazy(() =>
+import("https://framerusercontent.com/modules/uirMID1271nC7Rg9bpUh/MACKoJhsvMJEKdK7aGJt/augiA20Il.js")),
+path: "/"}} const collectionUtils = {} const locales = [{code: "en-US", id:
+"default", name: "English", slug: ""}] const notFoundPage = Framer.lazy(() =>
+import("__framer-not-found-page")) const container =
+document.getElementById("main") let routeId, localeId, pathVariables,
+shouldHydrate = false if ("framerHydrateV2" in container.dataset) { const
+routeData = JSON.parse(container.dataset.framerHydrateV2) routeId =
+routeData.routeId localeId = routeData.localeId pathVariables =
+routeData.pathVariables shouldHydrate = true } else { const routeData =
+Framer.inferInitialRouteFromPath(routes, decodeURIComponent(location.pathname),
+true, locales) routeId = routeData.routeId localeId = routeData.localeId
+pathVariables = routeData.pathVariables } const route = routes[routeId] const
+RootComponent = await route.page.preload() routes[routeId].page = RootComponent
+const content = React.createElement( Framer.PageRoot, { RootComponent,
+isWebsite: true, routeId, pathVariables, routes, collectionUtils, notFoundPage,
+isReducedMotion: undefined, localeId, locales, preserveQueryParams: undefined,
+enableSuspenseThatPreservesDom: true, shouldMarkHydrationEnd: shouldHydrate, } )
+const contentWithFeaturesContext = React.createElement(
+Framer.LibraryFeaturesProvider, { children: content, value:
+{imgSizesWorkaroundEnabled: false} } ) const page =
+React.createElement(Framer.PageEffectsProvider, { children:
+contentWithFeaturesContext, value: {routes: {}} }) if (shouldHydrate) {
+React.startTransition(() => { performance.mark("framer-hydration-start")
+ReactDOM.hydrateRoot(container, page) }) } else {
+ReactDOM.createRoot(container).render(page) } })().catch(error => {
+track("published_site_load_error", { message: String(error), stack: error
+instanceof Error && typeof error.stack === "string" ? error.stack : null })
+throw error })
